@@ -1,4 +1,5 @@
 package com.contactbook
+import android.os.Bundle;
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -12,6 +13,10 @@ class MainActivity : ReactActivity() {
    * rendering of the component.
    */
   override fun getMainComponentName(): String = "ContactBook"
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(null)
+  }
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
