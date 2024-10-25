@@ -10,15 +10,20 @@ import UpdateContactScreen from "../screens/UpdateContactScreen";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigator = () => {
-    return (
-        <Stack.Navigator initialRouteName='AllContacts'>
-          <Stack.Screen name='AllContacts' component={AllContactsScreen} options={{ title: 'Mis contactos' }} />
-          <Stack.Screen name='SingleContact' component={SingleContactScreen} options={{title: 'Detalles del contacto'}} />
-          <Stack.Screen name='AddContact' component={AddContactScreen} options={{ title: 'Nuevo contacto' }} />
-          <Stack.Screen name='UpdateContact' component={UpdateContactScreen} options={{title: 'Editar contacto'}} />
+  return (
+    <Stack.Navigator initialRouteName='AllContacts'>
+      <Stack.Screen
+        name='AllContacts'
+        component={AllContactsScreen}
+        options={{
+          title: 'Mis contactos'
+        }} />
+      <Stack.Screen name='SingleContact' component={SingleContactScreen} options={{ title: 'Detalles del contacto' }} />
+      <Stack.Screen name='AddContact' component={AddContactScreen} options={{ title: 'Nuevo contacto' }} />
+      <Stack.Screen name='UpdateContact' component={UpdateContactScreen} options={{ title: 'Editar contacto' }} />
 
-        </Stack.Navigator>
-    )
+    </Stack.Navigator>
+  )
 }
 
 export default StackNavigator;

@@ -1,8 +1,9 @@
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { StyleSheet, Text, TouchableHighlight, View, ViewComponent } from 'react-native';
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Inputfield from '../Atoms/InputField';
 import { IContact } from '../../interfaces/contactInterface';
 import SubmitButton from '../Atoms/submitButton';
+import { getContacts, saveContact } from '../../services/contactsServices';
 
 
 interface IFormInput {
@@ -21,9 +22,21 @@ const ContactForm = ({ contact }: Props) => {
     const { control, handleSubmit, formState: { errors }
     } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-        console.log(data);
+    
+
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        const contacts =  await getContacts();
+        const toSave = {
+            ...data,
+            id: contact ? contact.id : Math.floor(Math.random() * 1000).toString()
+        }
+        contacts.push(toSave);
+        saveContact(contacts);
     }
+
+
+
+
 
     return (
         <View style={styles.container}>
@@ -55,7 +68,7 @@ const ContactForm = ({ contact }: Props) => {
             )}
             />
 
-            <Controller name='phoneNumber' control={control} defaultValue={contact ? contact.number : ''} rules={{
+            <Controller name='phoneNumber' control={control} defaultValue={contact ? contact.phoneNumber : ''} rules={{
                 required: {
                     value: true,
                     message: 'Campo requerido'

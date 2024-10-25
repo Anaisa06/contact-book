@@ -35,7 +35,7 @@ const SingleContactScreen = ({ route }: Props) => {
                     <ImageContainer />
 
                     <Text style={styles.name}>{contact.name}</Text>
-                    <PhoneNumber phoneNumber={contact.number} iconSize={28} fontSize={20} />
+                    <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={28} fontSize={20} />
                     <Email email={contact.email} iconSize={28} fontSize={20} />
                 </View>
 
