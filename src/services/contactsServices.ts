@@ -20,3 +20,22 @@ export const getContacts = async (): Promise<IContact[]> => {
         return [];
       }
 }
+
+export const deleteContacts = async (contact: IContact) => {
+  try {
+    const contacts = await getContacts();
+    const updatedContacts = contacts.filter((item) => item.id != contact.id);
+    await saveContact(updatedContacts);
+    
+  } catch (error) {
+    console.error('Error deleting contacts', error);
+  }
+}
+
+export const removeAllContacts = async () => {
+  try {
+    await AsyncStorage.removeItem('contacts');
+  } catch (error) {
+    console.error('Error deleting contacts', error);
+  }
+}

@@ -15,6 +15,8 @@ const useFetch = (serviceFunction: () => Promise<any>, dependencies: any[] = [])
         fetchData();
     }, dependencies);
 
+    
+
     return data;
 };
 

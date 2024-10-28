@@ -1,10 +1,25 @@
-import { StyleSheet, View } from "react-native"
+import { Image, StyleSheet, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
+import { IContact } from "../../interfaces/contactInterface"
 
-export const ImageContainer = () => {
+interface Props {
+    contact?: IContact;
+}
+
+export const ImageContainer = ({ contact }: Props) => {
+
+    const uri = contact?.image
+
     return (
         <View style={styles.imageContainer}>
-            <Icon name='person' size={75} style={{ color: '#192A51' }} />
+
+            {
+                contact?.image 
+                ? <Image source={{uri}} style={styles.image}
+                  resizeMode='contain' />
+                : <Icon name='person' size={75} style={{ color: '#192A51' }} />
+            }
+            
 
         </View>
     )
@@ -21,4 +36,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    image: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+      },
 })

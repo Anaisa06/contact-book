@@ -19,6 +19,7 @@ const Inputfield = ({label, field, error, type = 'default'}: Props) => {
           value={field.value}
           placeholder={label}
           keyboardType={type}
+          placeholderTextColor={'#AAA1C8'}
         />
         {error && <Text style={styles.errorText}>{error.message}</Text>}
       </View>
@@ -33,7 +34,8 @@ const styles = StyleSheet.create({
         borderColor: '#967AA1',
         padding: 10,
         borderRadius: 8,
-        backgroundColor: 'white', 
+        backgroundColor: 'white',
+        color: '#192A51' 
     },
     inputError: {
         borderColor: 'red',

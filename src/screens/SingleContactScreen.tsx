@@ -7,6 +7,9 @@ import Email from "../components/Atoms/Email";
 import {  SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { SingleContactNavigationProp } from "../navigate/navigationTypes";
+import { IContact } from "../interfaces/contactInterface";
+import confirmationAlert from "../components/molecules/confirmationAlert";
+import { deleteContacts } from "../services/contactsServices";
 
 interface Props {
     route: SingleContactRoute;
@@ -21,6 +24,26 @@ const SingleContactScreen = ({ route }: Props) => {
         navigation.navigate('UpdateContact', { contact })
     }
 
+    const handleDeletePress = async () => {
+
+        const deleteFunction = async () => {
+            await deleteContacts(contact);
+            navigation.navigate('AllContacts')
+        }
+
+        try {
+            const alertProps = {
+                title: 'Eliminar contacto',
+                text: `¿Estás segur@ que desear eliminar el contacto ${contact.name}?`,
+                confirmFunction: deleteFunction
+            }
+    
+            confirmationAlert(alertProps)
+        } catch (error) {
+            console.error('Error in handle delete press', error)
+        }         
+    }
+
     return (
         <SafeAreaProvider>
         <SafeAreaView >
@@ -29,10 +52,10 @@ const SingleContactScreen = ({ route }: Props) => {
             <View style={styles.container}>
                 <View style={styles.iconsContainer}>
                     <Icon name='edit' size={30} color={'#192A51'} onPress={handleUpdatePress}/>
-                    <Icon name='delete' size={30} color={'#653279'} />
+                    <Icon name='delete' size={30} color={'#653279'} onPress={handleDeletePress}/>
                 </View>
                 <View style={styles.infoContainer}>
-                    <ImageContainer />
+                    <ImageContainer contact={contact} />
 
                     <Text style={styles.name}>{contact.name}</Text>
                     <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={28} fontSize={20} />

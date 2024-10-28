@@ -4,6 +4,10 @@ import Inputfield from '../Atoms/InputField';
 import { IContact } from '../../interfaces/contactInterface';
 import SubmitButton from '../Atoms/submitButton';
 import { getContacts, saveContact } from '../../services/contactsServices';
+import { useState } from 'react';
+import ConfirmationModal from '../molecules/confirmationModal';
+import { AddContactNavigationProp, UpdateContactNavigationProp } from '../../navigate/navigationTypes';
+import ImagePicker from '../molecules/imagePicker';
 
 
 interface IFormInput {
@@ -15,31 +19,61 @@ interface IFormInput {
 
 interface Props {
     contact?: IContact;
+    navigator: AddContactNavigationProp | UpdateContactNavigationProp;
 }
 
-const ContactForm = ({ contact }: Props) => {
+const ContactForm = ({ contact, navigator }: Props) => {
+
+    const [openModal, setOpenModal] = useState(false);
+    const [modalText, setModalText] = useState('');
+    const [imageUri, setImageUri] = useState('');
+
+    const handleImageChange = (image: string) => {
+        setImageUri(image);
+    }
 
     const { control, handleSubmit, formState: { errors }
     } = useForm<IFormInput>();
 
-    
-
-    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        const contacts =  await getContacts();
-        const toSave = {
-            ...data,
-            id: contact ? contact.id : Math.floor(Math.random() * 1000).toString()
-        }
-        contacts.push(toSave);
-        saveContact(contacts);
+    const handleModalClose = () => {
+        setOpenModal(false)
+        navigator.navigate('AllContacts');
     }
 
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        try {
+            const contacts = await getContacts();
+            let updatedContacts = [...contacts];
 
+            if (contact) {
+                updatedContacts = contacts.filter((item) => item.id != contact.id)
+            }
+
+            const toSave = {
+                ...data,
+                id: contact ? contact.id : Math.floor(Math.random() * 1000).toString(),
+                image: imageUri ? imageUri : undefined
+            }
+
+
+            updatedContacts.push(toSave);
+            await saveContact(updatedContacts);
+
+            setModalText('Guardado con éxito')
+
+        } catch (error) {
+            console.error('Error saving contact from the form', error);
+            setModalText('Algo salió mal')
+        } finally {
+            setOpenModal(true);
+        }
+    }
 
 
 
     return (
         <View style={styles.container}>
+            <ImagePicker handleImageChange={handleImageChange} contact={contact}/>
             <Controller name='name' control={control} defaultValue={contact ? contact.name : ''} rules={{
                 required: {
                     value: true,
@@ -82,7 +116,9 @@ const ContactForm = ({ contact }: Props) => {
             )}
             />
 
-            <SubmitButton text='Guardar' handleSubmit={handleSubmit(onSubmit)}/>
+            <SubmitButton text='Guardar' handleSubmit={handleSubmit(onSubmit)} />
+
+            <ConfirmationModal onClose={handleModalClose} openModal={openModal} text={modalText} />
 
         </View>
     )

@@ -4,23 +4,21 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { ImageContainer } from "../Atoms/ImageContainer";
 import PhoneNumber from "../Atoms/PhoneNumber";
 import Email from "../Atoms/Email";
+import { IContact } from "../../interfaces/contactInterface";
 
 interface ItemProps { 
-    id: string; 
-    name: string; 
-    number: string;
-    email: string;
+    contact: IContact;
     handlePress: () => void;
 };
 
-const CardComponent = ({ id, name, number, email, handlePress }: ItemProps) => {
+const CardComponent = ({ contact, handlePress }: ItemProps) => {
     return (
         <Pressable style={styles.contactCard} onPress={handlePress}  >
-            <ImageContainer/>
+            <ImageContainer contact={contact}/>
             <View style={styles.infoContainer}>
-                <Text style={styles.name} >{name}</Text>
-                <PhoneNumber phoneNumber={number} iconSize={25} fontSize={17}/>
-                <Email email={email} fontSize={17} iconSize={25} />
+                <Text style={styles.name} >{contact.name}</Text>
+                <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={25} fontSize={17}/>
+                <Email email={contact.email} fontSize={17} iconSize={25} />
 
             </View>
 
