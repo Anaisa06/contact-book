@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableHighlight, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 interface Props {
     text: string;
@@ -17,9 +17,8 @@ const SubmitButton = ({ handleSubmit, text }: Props) => {
   const styles = StyleSheet.create({
     button: {
       backgroundColor: '#192A51',
-      width: '60%',
+      width: '45%',
       height: 50,
-      paddingHorizontal: 30, 
       borderRadius: 8, 
       alignItems: 'center', 
       justifyContent: 'center',
@@ -29,8 +28,9 @@ const SubmitButton = ({ handleSubmit, text }: Props) => {
     },
     buttonText: {
       color: '#F5E6E8', 
-      fontSize: 16,
+      fontSize: 15,
       fontWeight: 'bold',
+      textAlign: 'center'
     },
   });
 

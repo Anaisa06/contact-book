@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SingleContactRoute } from "../navigate/routesTypes";
 import { ImageContainer } from "../components/Atoms/ImageContainer";
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -46,7 +46,8 @@ const SingleContactScreen = ({ route }: Props) => {
 
     return (
         <SafeAreaProvider>
-        <SafeAreaView >
+        <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
   
 
             <View style={styles.container}>
@@ -55,7 +56,7 @@ const SingleContactScreen = ({ route }: Props) => {
                     <Icon name='delete' size={30} color={'#653279'} onPress={handleDeletePress}/>
                 </View>
                 <View style={styles.infoContainer}>
-                    <ImageContainer contact={contact} />
+                    <ImageContainer uri={contact.image} size={150}/>
 
                     <Text style={styles.name}>{contact.name}</Text>
                     <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={28} fontSize={20} />
@@ -64,6 +65,8 @@ const SingleContactScreen = ({ route }: Props) => {
 
             </View>
 
+            </ScrollView>
+
         </SafeAreaView>
         </SafeAreaProvider>
 
@@ -71,9 +74,15 @@ const SingleContactScreen = ({ route }: Props) => {
 }
 
 const styles = StyleSheet.create({
+    scrollContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 20,
+      },
     container: {
         width: '90%',
-        height: '95%',
+        height: '100%',
         padding: 20,
         margin: 20,
         alignSelf: 'center',
@@ -88,7 +97,7 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         width: '100%',
-
+        height: '100%',
         padding: 20,
         margin: 20,
         alignSelf: 'center',
@@ -96,7 +105,7 @@ const styles = StyleSheet.create({
         gap: 20,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: 'white',
+
 
     },
     iconsContainer: {

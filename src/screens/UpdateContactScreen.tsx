@@ -16,7 +16,7 @@ const UpdateContactScreen = ({ route }: Props) => {
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView>
+            <SafeAreaView style={{ flex: 1 }}>
 
             <ContactForm contact={contact} navigator={navigation} />
                 
