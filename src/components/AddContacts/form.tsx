@@ -8,6 +8,7 @@ import { useState } from 'react';
 import ConfirmationModal from '../molecules/confirmationModal';
 import { AddContactNavigationProp, UpdateContactNavigationProp } from '../../navigate/navigationTypes';
 import ImagePicker from '../molecules/imagePicker';
+import MapComponent from '../molecules/MapComponent';
 
 
 interface IFormInput {
@@ -27,6 +28,9 @@ const ContactForm = ({ contact, navigator }: Props) => {
     const [openModal, setOpenModal] = useState(false);
     const [modalText, setModalText] = useState('');
     const [imageUri, setImageUri] = useState('');
+    const [location, setLocation] = useState(contact?.location)
+
+    console.log(location)
 
     const handleImageChange = (image: string) => {
         setImageUri(image);
@@ -40,6 +44,8 @@ const ContactForm = ({ contact, navigator }: Props) => {
         navigator.navigate('AllContacts');
     }
 
+
+
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
             const contacts = await getContacts();
@@ -52,8 +58,11 @@ const ContactForm = ({ contact, navigator }: Props) => {
             const toSave = {
                 ...data,
                 id: contact ? contact.id : Math.floor(Math.random() * 1000).toString(),
-                image: imageUri ? imageUri : contact?.image
+                image: imageUri ? imageUri : contact?.image,
+                location: location
             }
+
+            console.log('this is save', toSave);
 
 
             updatedContacts.push(toSave);
@@ -122,6 +131,8 @@ const ContactForm = ({ contact, navigator }: Props) => {
                         <Inputfield label='Número de celular' field={field} error={errors.phoneNumber} type={'phone-pad'} />
                     )}
                     />
+
+                    <MapComponent location={location} setLocation={setLocation}/>
 
                     <SubmitButton text='Guardar' handleSubmit={handleSubmit(onSubmit)} />
 

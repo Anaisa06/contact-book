@@ -4,6 +4,7 @@ import { RootStackParamList } from "./navigationTypes";
 import SingleContactScreen from "../screens/SingleContactScreen";
 import AddContactScreen from "../screens/AddContactScreen";
 import UpdateContactScreen from "../screens/UpdateContactScreen";
+import MapModal from "../screens/MapModal";
 
 
 
@@ -21,6 +22,7 @@ const StackNavigator = () => {
       <Stack.Screen name='SingleContact' component={SingleContactScreen} options={{ title: 'Detalles del contacto' }} />
       <Stack.Screen name='AddContact' component={AddContactScreen} options={{ title: 'Nuevo contacto' }} />
       <Stack.Screen name='UpdateContact' component={UpdateContactScreen} options={{ title: 'Editar contacto' }} />
+      {/* <Stack.Screen name='Map' component={MapScreen} options={{ title: 'Mapa'}} /> */}
 
     </Stack.Navigator>
   )

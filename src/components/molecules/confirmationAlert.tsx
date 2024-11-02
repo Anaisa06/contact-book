@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Alert } from 'react-native';
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
 }
 
 const confirmationAlert = ({title, text, confirmFunction}: Props) => {
+
 
         Alert.alert(
             title,

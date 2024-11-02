@@ -1,21 +1,26 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { SingleContactRoute } from "../navigate/routesTypes";
 import { ImageContainer } from "../components/Atoms/ImageContainer";
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import PhoneNumber from "../components/Atoms/PhoneNumber";
 import Email from "../components/Atoms/Email";
-import {  SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { SingleContactNavigationProp } from "../navigate/navigationTypes";
 import { IContact } from "../interfaces/contactInterface";
 import confirmationAlert from "../components/molecules/confirmationAlert";
 import { deleteContacts } from "../services/contactsServices";
+import SubmitButton from "../components/Atoms/submitButton";
+import { useState } from "react";
+import MapComponent from "../components/molecules/MapComponent";
 
 interface Props {
     route: SingleContactRoute;
 }
 
 const SingleContactScreen = ({ route }: Props) => {
+
+    const [openModal, setOpenModal] = useState(false);
 
     const navigation = useNavigation<SingleContactNavigationProp>();
     const { contact } = route.params;
@@ -37,39 +42,33 @@ const SingleContactScreen = ({ route }: Props) => {
                 text: `¿Estás segur@ que desear eliminar el contacto ${contact.name}?`,
                 confirmFunction: deleteFunction
             }
-    
+
             confirmationAlert(alertProps)
         } catch (error) {
             console.error('Error in handle delete press', error)
-        }         
+        }
     }
 
     return (
         <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-  
-
-            <View style={styles.container}>
-                <View style={styles.iconsContainer}>
-                    <Icon name='edit' size={30} color={'#192A51'} onPress={handleUpdatePress}/>
-                    <Icon name='delete' size={30} color={'#653279'} onPress={handleDeletePress}/>
-                </View>
-                <View style={styles.infoContainer}>
-                    <ImageContainer uri={contact.image} size={150}/>
-
-                    <Text style={styles.name}>{contact.name}</Text>
-                    <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={28} fontSize={20} />
-                    <Email email={contact.email} iconSize={28} fontSize={20} />
-                </View>
-
-            </View>
-
-            </ScrollView>
-
-        </SafeAreaView>
+            <SafeAreaView style={{ flex: 1 }}>
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    <View style={styles.container}>
+                        <View style={styles.iconsContainer}>
+                            <Icon name='edit' size={30} color={'#192A51'} onPress={handleUpdatePress} />
+                            <Icon name='delete' size={30} color={'#653279'} onPress={handleDeletePress} />
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <ImageContainer uri={contact.image} size={150} />
+                            <Text style={styles.name}>{contact.name}</Text>
+                            <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={28} fontSize={20} />
+                            <Email email={contact.email} iconSize={28} fontSize={20} />
+                        </View>
+                        <MapComponent location={contact.location}/>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
         </SafeAreaProvider>
-
     )
 }
 
@@ -79,15 +78,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 20,
-      },
+    },
     container: {
         width: '90%',
         height: '100%',
-        padding: 20,
+        padding: 10,
         margin: 20,
         alignSelf: 'center',
         display: 'flex',
-        gap: 20,
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: 'white',
@@ -97,15 +95,13 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         width: '100%',
-        height: '100%',
         padding: 20,
         margin: 20,
         alignSelf: 'center',
         display: 'flex',
-        gap: 20,
+        gap: 10,
         justifyContent: 'flex-start',
         alignItems: 'center',
-
 
     },
     iconsContainer: {

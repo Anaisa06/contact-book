@@ -6,6 +6,8 @@ project.ext.vectoricons = [
 ]
 
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 
 
 /**
@@ -78,6 +80,12 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+def dotenvFile = new File(rootProject.projectDir.parent, '.env')
+Properties properties = new Properties()
+if (dotenvFile.exists()) {
+    dotenvFile.withInputStream { properties.load(it) }
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -90,6 +98,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [GOOGLE_MAPS_API_KEY: properties.getProperty("GOOGLE_MAPS_API_KEY")]
     }
     signingConfigs {
         debug {
