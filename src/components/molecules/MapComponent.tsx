@@ -1,6 +1,8 @@
 import { StyleSheet, View } from 'react-native'
 import MapView, { Marker, LatLng, Region } from 'react-native-maps'
 import { getWeather } from '../../services/weatherServices';
+import useFetch from '../../hooks/useFetch';
+import { IWeather } from '../../interfaces/weatherInterface';
 
 interface Props {
     location?: LatLng;
@@ -10,9 +12,6 @@ interface Props {
 
 const MapComponent = ({location, setLocation }: Props) => {
 
-
-
-    
   const defaultLocation = {
     latitude: 6.219129692661363,
     longitude: -75.58361012412955,
@@ -133,9 +132,8 @@ const mapStyle = [
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
-        padding: 10,
         borderRadius: 8,
-        overflow: 'hidden'
+        overflow: 'hidden',
       },
       mapStyle: {
         width: '100%',

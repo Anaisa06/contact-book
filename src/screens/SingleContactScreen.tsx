@@ -11,8 +11,12 @@ import { IContact } from "../interfaces/contactInterface";
 import confirmationAlert from "../components/molecules/confirmationAlert";
 import { deleteContacts } from "../services/contactsServices";
 import SubmitButton from "../components/Atoms/submitButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MapComponent from "../components/molecules/MapComponent";
+import useFetch from "../hooks/useFetch";
+import { IWeather } from "../interfaces/weatherInterface";
+import { getWeather, getWeatherIcon } from "../services/weatherServices";
+import WeatherContainer from "../components/SingleContact/WeatherContainer";
 
 interface Props {
     route: SingleContactRoute;
@@ -20,10 +24,29 @@ interface Props {
 
 const SingleContactScreen = ({ route }: Props) => {
 
-    const [openModal, setOpenModal] = useState(false);
+    const [weather, setWeather] = useState<IWeather | undefined>(undefined)
 
     const navigation = useNavigation<SingleContactNavigationProp>();
     const { contact } = route.params;
+
+    const defaultLocation = {
+        latitude: 6.219129692661363,
+        longitude: -75.58361012412955,
+    }
+
+    const location = contact.location ? contact.location : defaultLocation
+
+    useEffect(() => {
+        const fecthData = async () => {
+            try {
+                const data = await getWeather(location);
+                setWeather(data)
+            } catch (error) {
+                console.error('Error getting weather', error);
+            }
+        }
+        fecthData()
+    }, [])
 
     const handleUpdatePress = () => {
         navigation.navigate('UpdateContact', { contact })
@@ -64,7 +87,10 @@ const SingleContactScreen = ({ route }: Props) => {
                             <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={28} fontSize={20} />
                             <Email email={contact.email} iconSize={28} fontSize={20} />
                         </View>
-                        <MapComponent location={contact.location}/>
+                        {weather &&
+                            <WeatherContainer currentWeather={weather} />
+                        }
+                        <MapComponent location={contact.location} />
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -91,6 +117,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 8,
         elevation: 3,
+        gap: 10
 
     },
     infoContainer: {

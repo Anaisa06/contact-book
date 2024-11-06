@@ -1,4 +1,4 @@
-package com.contactbook
+package com.closetoyou.romeo.a.www
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity

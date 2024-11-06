@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const weatherApiUrl = 'https://api.openweathermap.org/data/2.5/weather';
+const weatherApiUrl = 'https://api.openweathermap.org/';
 
 const weatherAxiosInstance = axios.create({
     baseURL: weatherApiUrl,
-    timeout: 1000,
+    timeout: 10000,
   });
 
 export default weatherAxiosInstance;

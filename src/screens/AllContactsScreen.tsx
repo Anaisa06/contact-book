@@ -24,7 +24,7 @@ const AllContactsScreen = () => {
         {
           data.length > 0
             ? <FlatList data={data} keyExtractor={item => item.id} renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} />
-            : <Text>No se encontraron contactos</Text>
+            : <Text style={{color: 'black', textAlign: 'center', margin: 20, fontSize: 20}}>Aún no tienes contactos</Text>
         }
 
         <AddBtnComponent handlePress={() => navigation.navigate('AddContact')} />
