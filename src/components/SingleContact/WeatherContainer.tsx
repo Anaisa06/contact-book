@@ -16,7 +16,6 @@ const WeatherContainer = ({ currentWeather }: Props) => {
     const { main, weather } = currentWeather;
 
     const iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`
-    console.log(iconUrl);
 
     return (
         <View style={styles.container}>

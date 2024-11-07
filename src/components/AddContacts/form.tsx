@@ -30,8 +30,6 @@ const ContactForm = ({ contact, navigator }: Props) => {
     const [imageUri, setImageUri] = useState('');
     const [location, setLocation] = useState(contact?.location)
 
-    console.log(location)
-
     const handleImageChange = (image: string) => {
         setImageUri(image);
     }
@@ -61,9 +59,6 @@ const ContactForm = ({ contact, navigator }: Props) => {
                 image: imageUri ? imageUri : contact?.image,
                 location: location
             }
-
-            console.log('this is save', toSave);
-
 
             updatedContacts.push(toSave);
             await saveContact(updatedContacts);

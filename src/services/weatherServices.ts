@@ -13,12 +13,3 @@ export const getWeather = async (location: LatLng): Promise<IWeather | undefined
         console.log('Error in get weather', error)
     }
 }
-
-export const getWeatherIcon = async (code: string)  => {
-    try {
-        const {data} = await weatherAxiosInstance.get(`img/wn/${code}.png`);
-        return data;
-    } catch (error) {
-        console.log('Error in get weather icon', error)
-    }
-}
