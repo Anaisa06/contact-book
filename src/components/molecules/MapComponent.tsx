@@ -44,7 +44,7 @@ const MapComponent = ({location, setLocation }: Props) => {
 }
 
 const mapStyle = [
-    {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+    {elementType: 'geometry', stylers: [{color: '#192A51'}]},
     {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
     {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
     {
@@ -60,7 +60,7 @@ const mapStyle = [
     {
       featureType: 'poi.park',
       elementType: 'geometry',
-      stylers: [{color: '#263c3f'}],
+      stylers: [{color: '#AAA1C8'}],
     },
     {
       featureType: 'poi.park',
@@ -70,7 +70,7 @@ const mapStyle = [
     {
       featureType: 'road',
       elementType: 'geometry',
-      stylers: [{color: '#38414e'}],
+      stylers: [{color: '#625D72'}],
     },
     {
       featureType: 'road',
@@ -80,12 +80,12 @@ const mapStyle = [
     {
       featureType: 'road',
       elementType: 'labels.text.fill',
-      stylers: [{color: '#9ca5b3'}],
+      stylers: [{color: '#D5C6E0'}],
     },
     {
       featureType: 'road.highway',
       elementType: 'geometry',
-      stylers: [{color: '#746855'}],
+      stylers: [{color: '#7D7693'}],
     },
     {
       featureType: 'road.highway',
@@ -95,7 +95,7 @@ const mapStyle = [
     {
       featureType: 'road.highway',
       elementType: 'labels.text.fill',
-      stylers: [{color: '#f3d19c'}],
+      stylers: [{color: '#F5E6E8'}],
     },
     {
       featureType: 'transit',
@@ -110,12 +110,12 @@ const mapStyle = [
     {
       featureType: 'water',
       elementType: 'geometry',
-      stylers: [{color: '#17263c'}],
+      stylers: [{color: '#586A95'}],
     },
     {
       featureType: 'water',
       elementType: 'labels.text.fill',
-      stylers: [{color: '#515c6d'}],
+      stylers: [{color: '#F5E6E8'}],
     },
     {
       featureType: 'water',

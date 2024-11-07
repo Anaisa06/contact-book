@@ -1,5 +1,5 @@
 import { useFocusEffect, useIsFocused, useNavigation } from "@react-navigation/native";
-import { Button, FlatList, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { HomeNavigationProp } from "../navigate/navigationTypes";
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import CardComponent from "../components/AllContacts/CardComponent";
@@ -7,26 +7,50 @@ import AddBtnComponent from "../components/AllContacts/AddBtnComponent";
 import { IContact } from "../interfaces/contactInterface";
 import useFetch from "../hooks/useFetch";
 import { getContacts } from "../services/contactsServices";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import Inputfield from "../components/Atoms/InputField";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import useDebouncer from "../hooks/useDebouncer";
 
 
 const AllContactsScreen = () => {
 
-  const isFocused = useIsFocused();
-
   const navigation = useNavigation<HomeNavigationProp>();
+  
+  const {data, refetch} = useFetch(getContacts);
 
-  const data: IContact[] = useFetch(getContacts, [isFocused]);
+  useFocusEffect(
+    useCallback(() => {
+      refetch()
+    }, [])
+  )
+  
+  const { control } = useForm();
+
+  const watchedText = useWatch({
+    control,
+    name: 'name',
+  })
+
+  const filteredData = useDebouncer(data || [], watchedText);
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ height: '100%' }}>
         {
           data.length > 0
-            ? <FlatList data={data} keyExtractor={item => item.id} renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} />
-            : <Text style={{color: 'black', textAlign: 'center', margin: 20, fontSize: 20}}>Aún no tienes contactos</Text>
+            ? 
+            <>
+           <Controller name='name' control={control} defaultValue={''}  render={({ field }) => (
+                        <Inputfield label='Busca contactos por nombre o número' field={field} />
+                    )}
+                    />
+            <FlatList data={filteredData} keyExtractor={item => item.id} renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} />
+            </>
+            : (<View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ color: 'black', textAlign: 'center', margin: 20, fontSize: 20 }}>Aún no tienes contactos</Text>
+            </View>)
         }
-
         <AddBtnComponent handlePress={() => navigation.navigate('AddContact')} />
       </SafeAreaView>
     </SafeAreaProvider>

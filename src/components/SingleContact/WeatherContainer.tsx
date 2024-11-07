@@ -22,11 +22,11 @@ const WeatherContainer = ({ currentWeather }: Props) => {
         <View style={styles.container}>
             <View style={styles.infoContainer}>
                 <View style={styles.infoContainer}>
-                    <Icon name='thermometer' size={30} />
+                    <Icon name='thermometer' size={30} style={{color: '#967AA1'}} />
                     <Text style={styles.text}>{main.temp}°C</Text>
                 </View>
                 <View style={styles.infoContainer}>
-                    <Icon name='water-outline' size={30} />
+                    <Icon name='water-outline' size={30} style={{color: '#967AA1'}}/>
                     <Text style={styles.text}>{main.humidity}%</Text>
                 </View>
             </View>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 8,
         // borderColor: '#967AA1',
-        backgroundColor: '#192A51',
+        backgroundColor: '#FAF9FF',
         // borderWidth: 1,
         elevation: 3,
         padding: 10,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 17,
         fontWeight: 'bold',
-        color: 'white'
+        color: '#424855'
     }
 })
 
