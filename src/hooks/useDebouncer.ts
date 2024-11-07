@@ -9,8 +9,11 @@ const useDebouncer = (data: IContact[], text: string) => {
         const changeHandler = setTimeout(() => {
           if (data) {
             const filteredData = data.filter((contact) => 
-              contact.name.toLowerCase().includes(text.toLowerCase()) || 
+             { if(text) {
+                return contact.name.toLowerCase()
+                .includes(text.toLowerCase()) || 
               contact.phoneNumber.includes(text)   
+              }}
             )
             setFilteredData(filteredData);
           }

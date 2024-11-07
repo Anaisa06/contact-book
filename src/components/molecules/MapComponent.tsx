@@ -1,8 +1,5 @@
 import { StyleSheet, View } from 'react-native'
 import MapView, { Marker, LatLng, Region } from 'react-native-maps'
-import { getWeather } from '../../services/weatherServices';
-import useFetch from '../../hooks/useFetch';
-import { IWeather } from '../../interfaces/weatherInterface';
 
 interface Props {
     location?: LatLng;
@@ -36,6 +33,7 @@ const MapComponent = ({location, setLocation }: Props) => {
       >
         <Marker        
         coordinate={initialRegion as LatLng}
+        pinColor='tan'
         />
         
     </MapView>

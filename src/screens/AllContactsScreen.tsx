@@ -32,7 +32,7 @@ const AllContactsScreen = () => {
     name: 'name',
   })
 
-  const filteredData = useDebouncer(data || [], watchedText);
+  const filteredData = useDebouncer(data, watchedText);
 
   return (
     <SafeAreaProvider>
@@ -42,15 +42,17 @@ const AllContactsScreen = () => {
             ? 
             <>
            <Controller name='name' control={control} defaultValue={''}  render={({ field }) => (
-                        <Inputfield label='Busca contactos por nombre o número' field={field} />
+                        <Inputfield label='Buscar contacto por nombre' field={field} />
                     )}
                     />
-            <FlatList data={filteredData} keyExtractor={item => item.id} renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} />
+            <FlatList data={filteredData.length ? filteredData : data} keyExtractor={item => item.id} renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} />
             </>
             : (<View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ color: 'black', textAlign: 'center', margin: 20, fontSize: 20 }}>Aún no tienes contactos</Text>
             </View>)
+
         }
+
         <AddBtnComponent handlePress={() => navigation.navigate('AddContact')} />
       </SafeAreaView>
     </SafeAreaProvider>
