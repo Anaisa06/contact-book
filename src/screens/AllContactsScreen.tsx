@@ -1,5 +1,5 @@
 import { useFocusEffect, useIsFocused, useNavigation } from "@react-navigation/native";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, SectionList, Text, View } from "react-native";
 import { HomeNavigationProp } from "../navigate/navigationTypes";
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import CardComponent from "../components/AllContacts/CardComponent";
@@ -11,19 +11,12 @@ import { useCallback, useEffect, useState } from "react";
 import Inputfield from "../components/Atoms/InputField";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import useDebouncer from "../hooks/useDebouncer";
+import useAllContacts from "../hooks/AllContacts/useAllContacts";
 
 
 const AllContactsScreen = () => {
 
   const navigation = useNavigation<HomeNavigationProp>();
-  
-  const {data, refetch} = useFetch(getContacts);
-
-  useFocusEffect(
-    useCallback(() => {
-      refetch()
-    }, [])
-  )
   
   const { control } = useForm();
 
@@ -32,7 +25,7 @@ const AllContactsScreen = () => {
     name: 'name',
   })
 
-  const filteredData = useDebouncer(data, watchedText);
+  const data = useAllContacts(watchedText)
 
   return (
     <SafeAreaProvider>
@@ -45,14 +38,19 @@ const AllContactsScreen = () => {
                         <Inputfield label='Buscar contacto por nombre o teléfono' field={field} />
                     )}
                     />
-            <FlatList data={filteredData.length ? filteredData : data} keyExtractor={item => item.id} renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} />
+            <SectionList  
+            sections={data} 
+            keyExtractor={(item, index) => item.id + index} 
+            renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} 
+            renderSectionHeader={({section: {title}}) => (
+              <Text style={{fontSize: 30, color: '#967AA1', paddingHorizontal: 20}}>{title}</Text>
+            )}
+            />
             </>
             : (<View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ color: 'black', textAlign: 'center', margin: 20, fontSize: 20 }}>Aún no tienes contactos</Text>
             </View>)
-
         }
-
         <AddBtnComponent handlePress={() => navigation.navigate('AddContact')} />
       </SafeAreaView>
     </SafeAreaProvider>

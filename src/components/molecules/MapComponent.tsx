@@ -29,7 +29,7 @@ const MapComponent = ({location, setLocation }: Props) => {
       style={styles.mapStyle}
       customMapStyle={mapStyle}
       initialRegion={{...initialRegion, latitudeDelta: 0.01, longitudeDelta: 0.01}}
-      onPress={handleMapPress} 
+      onPress={handleMapPress} loadingEnabled={true} showsUserLocation={true} showsMyLocationButton={true}
       >
         <Marker        
         coordinate={initialRegion as LatLng}
@@ -46,10 +46,21 @@ const mapStyle = [
     {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
     {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
     {
-      featureType: 'administrative.locality',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#d59563'}],
+      "featureType": "administrative.country",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#605c3e"
+        },
+        {
+          "visibility": "on"
+        },
+        {
+          "weight": 0.8
+        }
+      ]
     },
+
     {
       featureType: 'poi',
       elementType: 'labels.text.fill',
