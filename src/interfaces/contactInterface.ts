@@ -1,4 +1,5 @@
 import { LatLng } from "react-native-maps";
+import { Role } from "./rolesEnum";
 
 export interface IContact {
     id: string;
@@ -7,4 +8,5 @@ export interface IContact {
     phoneNumber: string;
     image?: string;
     location?: LatLng;
+    role?: Role;
 }

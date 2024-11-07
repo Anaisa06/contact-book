@@ -9,6 +9,8 @@ import ConfirmationModal from '../molecules/confirmationModal';
 import { AddContactNavigationProp, UpdateContactNavigationProp } from '../../navigate/navigationTypes';
 import ImagePicker from '../molecules/imagePicker';
 import MapComponent from '../molecules/MapComponent';
+import { Role } from '../../interfaces/rolesEnum';
+import RolePicker from '../molecules/rolePicker';
 
 
 interface IFormInput {
@@ -29,6 +31,8 @@ const ContactForm = ({ contact, navigator }: Props) => {
     const [modalText, setModalText] = useState('');
     const [imageUri, setImageUri] = useState('');
     const [location, setLocation] = useState(contact?.location)
+    const [role, setRole] = useState<Role | undefined>(contact?.role);
+    console.log(role);
 
     const handleImageChange = (image: string) => {
         setImageUri(image);
@@ -57,7 +61,8 @@ const ContactForm = ({ contact, navigator }: Props) => {
                 ...data,
                 id: contact ? contact.id : Math.floor(Math.random() * 1000).toString(),
                 image: imageUri ? imageUri : contact?.image,
-                location: location
+                location: location,
+                role: role
             }
 
             updatedContacts.push(toSave);
@@ -72,8 +77,6 @@ const ContactForm = ({ contact, navigator }: Props) => {
             setOpenModal(true);
         }
     }
-
-
 
     return (
 
@@ -126,6 +129,8 @@ const ContactForm = ({ contact, navigator }: Props) => {
                         <Inputfield label='Número de celular' field={field} error={errors.phoneNumber} type={'phone-pad'} />
                     )}
                     />
+
+                    <RolePicker role={role} setRole={setRole}/>
 
                     <MapComponent location={location} setLocation={setLocation}/>
 

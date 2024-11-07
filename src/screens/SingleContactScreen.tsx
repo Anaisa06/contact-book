@@ -15,8 +15,9 @@ import { useEffect, useState } from "react";
 import MapComponent from "../components/molecules/MapComponent";
 import useFetch from "../hooks/useFetch";
 import { IWeather } from "../interfaces/weatherInterface";
-import { getWeather, getWeatherIcon } from "../services/weatherServices";
+import { getWeather } from "../services/weatherServices";
 import WeatherContainer from "../components/SingleContact/WeatherContainer";
+import RoleContainer from "../components/Atoms/Role";
 
 interface Props {
     route: SingleContactRoute;
@@ -86,6 +87,9 @@ const SingleContactScreen = ({ route }: Props) => {
                             <Text style={styles.name}>{contact.name}</Text>
                             <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={28} fontSize={20} />
                             <Email email={contact.email} iconSize={28} fontSize={20} />
+                            {contact.role &&
+                                <RoleContainer role={contact.role} iconSize={25} fontSize={20}/>
+                            }
                         </View>
                         {weather &&
                             <WeatherContainer currentWeather={weather} />
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         display: 'flex',
         gap: 10,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
 
     },

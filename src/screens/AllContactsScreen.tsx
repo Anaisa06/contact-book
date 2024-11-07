@@ -42,7 +42,7 @@ const AllContactsScreen = () => {
             ? 
             <>
            <Controller name='name' control={control} defaultValue={''}  render={({ field }) => (
-                        <Inputfield label='Buscar contacto por nombre' field={field} />
+                        <Inputfield label='Buscar contacto por nombre o teléfono' field={field} />
                     )}
                     />
             <FlatList data={filteredData.length ? filteredData : data} keyExtractor={item => item.id} renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} />

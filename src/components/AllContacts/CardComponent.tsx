@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         padding: 10,
         display: 'flex',
         gap: 10,
-
+        justifyContent: 'center',
     },
     name: {
         fontSize: 20,
