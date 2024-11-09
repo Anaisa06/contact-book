@@ -32,7 +32,6 @@ const ContactForm = ({ contact, navigator }: Props) => {
     const [imageUri, setImageUri] = useState('');
     const [location, setLocation] = useState(contact?.location)
     const [role, setRole] = useState<Role | undefined>(contact?.role);
-    console.log(role);
 
     const handleImageChange = (image: string) => {
         setImageUri(image);

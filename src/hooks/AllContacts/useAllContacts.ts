@@ -38,6 +38,4 @@ const useAllContacts = (watchedText: string) => {
     return groupContactsByLetter(filteredData.length ? filteredData : data);
 };
 
-
-
 export default useAllContacts;

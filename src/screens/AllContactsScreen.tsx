@@ -1,18 +1,12 @@
-import { useFocusEffect, useIsFocused, useNavigation } from "@react-navigation/native";
-import { FlatList, SectionList, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { SectionList, Text, View } from "react-native";
 import { HomeNavigationProp } from "../navigate/navigationTypes";
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import CardComponent from "../components/AllContacts/CardComponent";
 import AddBtnComponent from "../components/AllContacts/AddBtnComponent";
-import { IContact } from "../interfaces/contactInterface";
-import useFetch from "../hooks/useFetch";
-import { getContacts } from "../services/contactsServices";
-import { useCallback, useEffect, useState } from "react";
 import Inputfield from "../components/Atoms/InputField";
 import { Controller, useForm, useWatch } from "react-hook-form";
-import useDebouncer from "../hooks/useDebouncer";
 import useAllContacts from "../hooks/AllContacts/useAllContacts";
-
 
 const AllContactsScreen = () => {
 
