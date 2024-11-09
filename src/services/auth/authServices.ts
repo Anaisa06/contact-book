@@ -14,14 +14,11 @@ export const LoginService = async (loginData: ILogin) => {
 }
 
 export const RegisterService = async (registerData:IRegister ) => {
-    try {
+
         const {data} = await apiAxiosInstance.post('auth/register', registerData);
         console.log(data);
         return data;
-    } catch (error) {
-        console.error('Error in register service', error);
-        return error;
-    }
+
 }
 
 export const setToken = async (token: string) => {
@@ -39,7 +36,7 @@ export const getToken = async () => {
         return true;
 }
 
-export const logOut = async () => {
+export const removeToken = async () => {
     try {
         await AsyncStorage.removeItem('token');
     } catch (error) {

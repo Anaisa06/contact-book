@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm, useWatch, SubmitHandler, Controller } from 'react-hook-form';
 import { ScrollView, Text, StyleSheet } from 'react-native';
 import Inputfield from '../Atoms/InputField';
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RegisterNavigationProp } from '../../navigate/navigationTypes';
 import { IRegister } from '../../interfaces/registerInterface';
 import { RegisterService } from '../../services/auth/authServices';
+import ConfirmationModal from '../molecules/confirmationModal';
 
 type FormData = {
     name: string;
@@ -20,9 +21,12 @@ type FormData = {
 
 const RegisterForm = () => {
 
+    const [openModal, setOpenModal] = useState(false);
+    const [modalText, setModalText] = useState('');
+
     const navigation = useNavigation<RegisterNavigationProp>();
 
-    const { control, handleSubmit, watch, formState: { errors } } = useForm<FormData>();
+    const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
     const password = useWatch({ control, name: 'password', defaultValue: '' });
 
     const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
@@ -35,10 +39,14 @@ const RegisterForm = () => {
             } 
 
             const response = await RegisterService(toSave);
-            console.log('This is response', response);
-
+            if(response.statusCode === 201) {
+                setModalText('Usuario registrado con éxito!')
+            }
         } catch (error) {
-            console.log(error);
+            console.log('Error in register submit', error);
+            setModalText('Algo salió mal')
+        } finally {
+            setOpenModal(true);
         }
     };
 
@@ -121,6 +129,7 @@ const RegisterForm = () => {
             />
             <SubmitButton text="Registrarse" handleSubmit={handleSubmit(onSubmit)} />
             <SubmitButton text="Ingresar" handleSubmit={handleLoginButton} />
+            <ConfirmationModal text={modalText} openModal={openModal} onClose={() => setOpenModal(false)} />
 
         </ScrollView>
     );

@@ -4,7 +4,7 @@ import { ScrollView, Text, View, TextInput, TouchableOpacity, StyleSheet, Alert 
 import Title from '../Atoms/Title';
 import Inputfield from '../Atoms/InputField';
 import SubmitButton from '../Atoms/submitButton';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import { LoginNavigationProp } from '../../navigate/navigationTypes';
 import { LoginService } from '../../services/auth/authServices';
 import ConfirmationModal from '../molecules/confirmationModal';
@@ -27,7 +27,12 @@ const LoginForm = () => {
         try {
             const response = await LoginService(data);
             if(response.statusCode === 201) {
-                navigation.navigate('AllContacts');
+                navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [{ name: 'AllContacts' }],
+                    })
+                  );
             }
         } catch (error: any) {
             console.log('Error in login submit', error);

@@ -52,8 +52,7 @@ const SingleContactScreen = ({ route }: Props) => {
     }, [])
 
     const handleUpdatePress = () => {
-        // navigation.navigate('UpdateContact', { contact })
-        navigation.navigate('Register');
+        navigation.navigate('UpdateContact', { contact })
     }
 
 
