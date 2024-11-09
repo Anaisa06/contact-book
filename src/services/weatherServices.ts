@@ -1,5 +1,5 @@
 import { LatLng } from "react-native-maps";
-import weatherAxiosInstance from "../config/axiosConfig";
+import {weatherAxiosInstance} from "../config/axiosConfig";
 import { IWeather } from "../interfaces/weatherInterface";
 
 const ApiKey = process.env.OPEN_WEATHER_API_KEY;

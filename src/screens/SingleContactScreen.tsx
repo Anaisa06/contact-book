@@ -18,6 +18,7 @@ import { IWeather } from "../interfaces/weatherInterface";
 import { getWeather } from "../services/weatherServices";
 import WeatherContainer from "../components/SingleContact/WeatherContainer";
 import RoleContainer from "../components/Atoms/Role";
+import { ApiTest } from "../services/test";
 
 interface Props {
     route: SingleContactRoute;
@@ -41,6 +42,7 @@ const SingleContactScreen = ({ route }: Props) => {
         const fecthData = async () => {
             try {
                 const data = await getWeather(location);
+                // const test = await ApiTest();
                 setWeather(data)
             } catch (error) {
                 console.error('Error getting weather', error);
@@ -50,8 +52,10 @@ const SingleContactScreen = ({ route }: Props) => {
     }, [])
 
     const handleUpdatePress = () => {
-        navigation.navigate('UpdateContact', { contact })
+        // navigation.navigate('UpdateContact', { contact })
+        navigation.navigate('Register');
     }
+
 
     const handleDeletePress = async () => {
 

@@ -3,6 +3,8 @@ import { IContact } from "../interfaces/contactInterface";
 import { LatLng } from "react-native-maps";
 
 export type RootStackParamList = {
+    Register: undefined;
+    Login: undefined;
     AllContacts: undefined;
     AddContact: undefined;
     SingleContact: { contact: IContact };
@@ -18,5 +20,8 @@ export type SingleContactNavigationProp = NativeStackNavigationProp<RootStackPar
 
 export type UpdateContactNavigationProp = NativeStackNavigationProp<RootStackParamList, 'UpdateContact'>;
 
+export type RegisterNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
+
+export type LoginNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
 
