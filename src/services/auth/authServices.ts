@@ -6,9 +6,8 @@ import { IRegister } from "../../interfaces/registerInterface";
 export const LoginService = async (loginData: ILogin) => {
 
         const {data} = await apiAxiosInstance.post('auth/login', loginData);
-        console.log('This is data from service', data);
         if(data.statusCode === 201) {
-            setToken(data.data);
+            setToken(data.data.token);
         }
         return data;
 }
@@ -16,7 +15,6 @@ export const LoginService = async (loginData: ILogin) => {
 export const RegisterService = async (registerData:IRegister ) => {
 
         const {data} = await apiAxiosInstance.post('auth/register', registerData);
-        console.log(data);
         return data;
 
 }
@@ -31,7 +29,6 @@ export const setToken = async (token: string) => {
 
 export const getToken = async () => {
         const token = await AsyncStorage.getItem('token');
-        console.log(token);
         if(!token) return false;
         return true;
 }

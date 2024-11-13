@@ -5,8 +5,6 @@ const verifyPermissions = async (requiredPermission: AndroidPermission): Promise
     try {
         const result = await check(requiredPermission);
 
-        console.log('Resultado de verify: ', result)
-
         if (result === 'granted') {
             return true;
         }
@@ -22,7 +20,6 @@ const verifyPermissions = async (requiredPermission: AndroidPermission): Promise
 const requestPermission = async (requiredPermission: AndroidPermission): Promise<Boolean> => {
     try {
         const result = await request(requiredPermission);
-        console.log('Resultado de request: ', result)
 
         return result === 'granted';
     } catch (error) {
