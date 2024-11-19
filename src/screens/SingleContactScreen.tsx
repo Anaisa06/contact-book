@@ -17,6 +17,7 @@ import { IWeather } from "../interfaces/weatherInterface";
 import { getWeather } from "../services/weatherServices";
 import WeatherContainer from "../components/SingleContact/WeatherContainer";
 import RoleContainer from "../components/Atoms/Role";
+import { useSingleContact } from "../hooks/SingleContact/useSingleContact";
 
 interface Props {
     route: SingleContactRoute;
@@ -24,52 +25,14 @@ interface Props {
 
 const SingleContactScreen = ({ route }: Props) => {
 
-    const [weather, setWeather] = useState<IWeather | undefined>(undefined)
-
-    const navigation = useNavigation<SingleContactNavigationProp>();
     const { contact } = route.params;
 
-    const defaultLocation = {
-        latitude:  Number (contact.latitude),
-        longitude: Number (contact.longitude)
-    }
-
-    useEffect(() => {
-        const fecthData = async () => {
-            try {
-                const data = await getWeather(defaultLocation);
-                setWeather(data)
-            } catch (error) {
-                console.error('Error getting weather', error);
-            }
-        }
-        fecthData()
-    }, [])
-
-    const handleUpdatePress = () => {
-        navigation.navigate('UpdateContact', { contact })
-    }
-
-
-    const handleDeletePress = async () => {
-
-        const deleteFunction = async () => {
-            await deleteContacts(contact);
-            navigation.navigate('AllContacts')
-        }
-
-        try {
-            const alertProps = {
-                title: 'Eliminar contacto',
-                text: `¿Estás segur@ que desear eliminar el contacto ${contact.name}?`,
-                confirmFunction: deleteFunction
-            }
-
-            confirmationAlert(alertProps)
-        } catch (error) {
-            console.error('Error in handle delete press', error)
-        }
-    }
+    const {
+        handleUpdatePress,
+        handleDeletePress,
+        weather,
+        location
+    } = useSingleContact(contact);
 
     return (
         <SafeAreaProvider>
@@ -92,7 +55,7 @@ const SingleContactScreen = ({ route }: Props) => {
                         {weather &&
                             <WeatherContainer currentWeather={weather} />
                         }
-                        <MapComponent location={defaultLocation} />
+                        <MapComponent location={location} />
                     </View>
                 </ScrollView>
             </SafeAreaView>
