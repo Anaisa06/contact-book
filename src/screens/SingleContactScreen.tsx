@@ -13,12 +13,10 @@ import { deleteContacts } from "../services/contactsServices";
 import SubmitButton from "../components/Atoms/submitButton";
 import { useEffect, useState } from "react";
 import MapComponent from "../components/molecules/MapComponent";
-import useFetch from "../hooks/useFetch";
 import { IWeather } from "../interfaces/weatherInterface";
 import { getWeather } from "../services/weatherServices";
 import WeatherContainer from "../components/SingleContact/WeatherContainer";
 import RoleContainer from "../components/Atoms/Role";
-import { ApiTest } from "../services/test";
 
 interface Props {
     route: SingleContactRoute;
@@ -32,17 +30,14 @@ const SingleContactScreen = ({ route }: Props) => {
     const { contact } = route.params;
 
     const defaultLocation = {
-        latitude: 6.219129692661363,
-        longitude: -75.58361012412955,
+        latitude:  Number (contact.latitude),
+        longitude: Number (contact.longitude)
     }
-
-    const location = contact.location ? contact.location : defaultLocation
 
     useEffect(() => {
         const fecthData = async () => {
             try {
-                const data = await getWeather(location);
-                // const test = await ApiTest();
+                const data = await getWeather(defaultLocation);
                 setWeather(data)
             } catch (error) {
                 console.error('Error getting weather', error);
@@ -86,7 +81,7 @@ const SingleContactScreen = ({ route }: Props) => {
                             <Icon name='delete' size={30} color={'#653279'} onPress={handleDeletePress} />
                         </View>
                         <View style={styles.infoContainer}>
-                            <ImageContainer uri={contact.image} size={150} />
+                            <ImageContainer uri={contact.imageUri} size={150} />
                             <Text style={styles.name}>{contact.name}</Text>
                             <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={28} fontSize={20} />
                             <Email email={contact.email} iconSize={28} fontSize={20} />
@@ -97,7 +92,7 @@ const SingleContactScreen = ({ route }: Props) => {
                         {weather &&
                             <WeatherContainer currentWeather={weather} />
                         }
-                        <MapComponent location={contact.location} />
+                        <MapComponent location={defaultLocation} />
                     </View>
                 </ScrollView>
             </SafeAreaView>

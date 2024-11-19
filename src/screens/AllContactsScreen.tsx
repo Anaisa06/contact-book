@@ -19,13 +19,13 @@ const AllContactsScreen = () => {
     name: 'name',
   })
 
-  const data = useAllContacts(watchedText)
+  const { groupedData, user }= useAllContacts(watchedText);
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ height: '100%' }}>
         {
-          data.length > 0
+          groupedData.length > 0
             ? 
             <>
            <Controller name='name' control={control} defaultValue={''}  render={({ field }) => (
@@ -33,7 +33,7 @@ const AllContactsScreen = () => {
                     )}
                     />
             <SectionList  
-            sections={data} 
+            sections={groupedData} 
             keyExtractor={(item, index) => item.id + index} 
             renderItem={({ item }) => <CardComponent contact={item} handlePress={() => navigation.navigate('SingleContact', { contact: item })} />} 
             renderSectionHeader={({section: {title}}) => (

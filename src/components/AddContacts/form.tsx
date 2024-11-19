@@ -3,7 +3,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Inputfield from '../Atoms/InputField';
 import { IContact } from '../../interfaces/contactInterface';
 import SubmitButton from '../Atoms/submitButton';
-import { getContacts, saveContact } from '../../services/contactsServices';
+import { getContacts, saveContact, updateContact } from '../../services/contactsServices';
 import { useState } from 'react';
 import ConfirmationModal from '../molecules/confirmationModal';
 import { AddContactNavigationProp, UpdateContactNavigationProp } from '../../navigate/navigationTypes';
@@ -11,6 +11,8 @@ import ImagePicker from '../molecules/imagePicker';
 import MapComponent from '../molecules/MapComponent';
 import { Role } from '../../interfaces/rolesEnum';
 import RolePicker from '../molecules/rolePicker';
+import { getUser } from '../../services/auth/authServices';
+import { LatLng } from 'react-native-maps';
 
 
 interface IFormInput {
@@ -27,11 +29,18 @@ interface Props {
 
 const ContactForm = ({ contact, navigator }: Props) => {
 
+    const contactLocation = {
+        latitude:  Number (contact?.latitude),
+        longitude: Number (contact?.longitude)
+    }
+
     const [openModal, setOpenModal] = useState(false);
     const [modalText, setModalText] = useState('');
     const [imageUri, setImageUri] = useState('');
-    const [location, setLocation] = useState(contact?.location)
+    const [location, setLocation] = useState(contact? contactLocation : undefined);
     const [role, setRole] = useState<Role | undefined>(contact?.role);
+
+    console.log('LOCATION', location)
 
     const handleImageChange = (image: string) => {
         setImageUri(image);
@@ -49,25 +58,21 @@ const ContactForm = ({ contact, navigator }: Props) => {
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
-            const contacts = await getContacts();
-            let updatedContacts = [...contacts];
-
-            if (contact) {
-                updatedContacts = contacts.filter((item) => item.id != contact.id)
-            }
+            const user = await getUser();
 
             const toSave = {
                 ...data,
-                id: contact ? contact.id : Math.floor(Math.random() * 1000).toString(),
-                image: imageUri ? imageUri : contact?.image,
+                id: contact?.id,
+                imageUri: imageUri ? imageUri : contact?.imageUri,
                 location: location,
                 role: role
             }
 
-            updatedContacts.push(toSave);
-            await saveContact(updatedContacts);
-
-            setModalText('Guardado con éxito')
+            const  savedContact = await saveContact(toSave, user);
+            
+            if(savedContact.statusCode === 201 || savedContact.statusCode === 200) {
+                setModalText('Guardado con éxito')
+            }
 
         } catch (error) {
             console.error('Error saving contact from the form', error);

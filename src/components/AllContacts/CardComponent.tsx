@@ -14,7 +14,7 @@ interface ItemProps {
 const CardComponent = ({ contact, handlePress }: ItemProps) => {
     return (
         <Pressable style={styles.contactCard} onPress={handlePress}  >
-            <ImageContainer uri={contact.image}/>
+            <ImageContainer uri={contact.imageUri}/>
             <View style={styles.infoContainer}>
                 <Text style={styles.name} >{contact.name}</Text>
                 <PhoneNumber phoneNumber={contact.phoneNumber} iconSize={25} fontSize={17}/>

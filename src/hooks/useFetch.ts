@@ -12,10 +12,11 @@ const useFetch = (serviceFunction: () => Promise<any>, dependencies: any[] = [])
         }
     }
     
-    useEffect(() => {
-        fetchData();
-    }, dependencies);
+    // useEffect(() => {
+    //     fetchData();
+    // }, dependencies);
 
+    fetchData()
     
 
     return {data, refetch: fetchData};

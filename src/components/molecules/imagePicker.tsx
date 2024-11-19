@@ -12,7 +12,7 @@ interface Props {
 
 const ImagePicker = ({ handleImageChange, contact }: Props) => {
 
-    const [image, setImage] = useState(contact?.image);
+    const [image, setImage] = useState(contact?.imageUri);
 
     const handleTakeImage = async () => {
         const imageUri = await takePhoto();
