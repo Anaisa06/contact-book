@@ -1,20 +1,14 @@
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View, ViewComponent } from 'react-native';
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Controller, useForm } from "react-hook-form";
 import Inputfield from '../Atoms/InputField';
 import { IContact } from '../../interfaces/contactInterface';
 import SubmitButton from '../Atoms/submitButton';
-import { getContacts, saveContact, updateContact } from '../../services/contactsServices';
-import { useState } from 'react';
 import ConfirmationModal from '../molecules/confirmationModal';
 import { AddContactNavigationProp, UpdateContactNavigationProp } from '../../navigate/navigationTypes';
 import ImagePicker from '../molecules/imagePicker';
 import MapComponent from '../molecules/MapComponent';
-import { Role } from '../../interfaces/rolesEnum';
 import RolePicker from '../molecules/rolePicker';
-import { getUser } from '../../services/auth/authServices';
-import { LatLng } from 'react-native-maps';
 import { useContactForm } from '../../hooks/Form/useContactForm';
-
 
 interface IFormInput {
     name: string;

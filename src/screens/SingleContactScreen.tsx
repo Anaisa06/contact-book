@@ -5,16 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import PhoneNumber from "../components/Atoms/PhoneNumber";
 import Email from "../components/Atoms/Email";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
-import { SingleContactNavigationProp } from "../navigate/navigationTypes";
-import { IContact } from "../interfaces/contactInterface";
-import confirmationAlert from "../components/molecules/confirmationAlert";
-import { deleteContacts } from "../services/contactsServices";
-import SubmitButton from "../components/Atoms/submitButton";
-import { useEffect, useState } from "react";
 import MapComponent from "../components/molecules/MapComponent";
-import { IWeather } from "../interfaces/weatherInterface";
-import { getWeather } from "../services/weatherServices";
 import WeatherContainer from "../components/SingleContact/WeatherContainer";
 import RoleContainer from "../components/Atoms/Role";
 import { useSingleContact } from "../hooks/SingleContact/useSingleContact";

@@ -8,6 +8,7 @@ import { CommonActions, useNavigation } from '@react-navigation/native';
 import { LoginNavigationProp } from '../../navigate/navigationTypes';
 import { LoginService } from '../../services/auth/authServices';
 import ConfirmationModal from '../molecules/confirmationModal';
+import { useLoginForm } from '../../hooks/Form/useLoginForm';
 
 interface FormData {
     email: string;
@@ -16,34 +17,15 @@ interface FormData {
 
 const LoginForm = () => {
 
-    const [modal, setOpenModal] = useState(false);
-    const [modalText, setModalText] = useState('');
-
-    const navigation = useNavigation<LoginNavigationProp>();
-
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
 
-    const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-        try {
-            const response = await LoginService(data);
-            if(response.statusCode === 201) {
-                navigation.dispatch(
-                    CommonActions.reset({
-                      index: 0,
-                      routes: [{ name: 'AllContacts' }],
-                    })
-                  );
-            }
-        } catch (error: any) {
-            console.log('Error in login submit', error);
-            if (error.status === 400 ) {
-                setModalText('Las credenciales no son válidas')
-            } else {
-                setModalText('Algo salió mal')
-            }
-            setOpenModal(true);
-        }
-    };
+    const {
+        navigation,
+        onSubmit,
+        modal,
+        modalText,
+        setOpenModal
+    } = useLoginForm();
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
