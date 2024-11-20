@@ -9,6 +9,7 @@ import { RegisterNavigationProp } from '../../navigate/navigationTypes';
 import { IRegister } from '../../interfaces/registerInterface';
 import { RegisterService } from '../../services/auth/authServices';
 import ConfirmationModal from '../molecules/confirmationModal';
+import { useRegisterForm } from '../../hooks/Form/useRegisterForm';
 
 type FormData = {
     name: string;
@@ -21,39 +22,47 @@ type FormData = {
 
 const RegisterForm = () => {
 
-    const [openModal, setOpenModal] = useState(false);
-    const [modalText, setModalText] = useState('');
-
-    const navigation = useNavigation<RegisterNavigationProp>();
-
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
     const password = useWatch({ control, name: 'password', defaultValue: '' });
+    // const [openModal, setOpenModal] = useState(false);
+    // const [modalText, setModalText] = useState('');
 
-    const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-        try {
-            const toSave: IRegister = {
-                name: data.name,
-                email: data.email,
-                password: data.password,
-                phoneNumber: data.phoneNumber
-            } 
+    // const navigation = useNavigation<RegisterNavigationProp>();
 
-            const response = await RegisterService(toSave);
-            if(response.statusCode === 201) {
-                setModalText('Usuario registrado con éxito!')
-            }
-        } catch (error) {
-            console.log('Error in register submit', error);
-            setModalText('Algo salió mal')
-        } finally {
-            setOpenModal(true);
-        }
-    };
 
-    const handleLoginButton = () => {
-        navigation.navigate('Login');
-    }
+    // const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+    //     try {
+    //         const toSave: IRegister = {
+    //             name: data.name,
+    //             email: data.email,
+    //             password: data.password,
+    //             phoneNumber: data.phoneNumber
+    //         } 
 
+    //         const response = await RegisterService(toSave);
+    //         if(response.statusCode === 201) {
+    //             setModalText('Usuario registrado con éxito!')
+    //         }
+    //     } catch (error) {
+    //         console.log('Error in register submit', error);
+    //         setModalText('Algo salió mal')
+    //     } finally {
+    //         setOpenModal(true);
+    //     }
+    // };
+
+    // const handleLoginButton = () => {
+    //     navigation.navigate('Login');
+    // }
+
+    const {
+        onSubmit,
+        openModal,
+        modalText,
+        handleLoginButton,
+        handleModalClose
+    } = useRegisterForm()
+ 
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <Title/>
@@ -129,7 +138,7 @@ const RegisterForm = () => {
             />
             <SubmitButton text="Registrarse" handleSubmit={handleSubmit(onSubmit)} />
             <SubmitButton text="Ingresar" handleSubmit={handleLoginButton} />
-            <ConfirmationModal text={modalText} openModal={openModal} onClose={() => setOpenModal(false)} />
+            <ConfirmationModal text={modalText} openModal={openModal} onClose={handleModalClose} />
 
         </ScrollView>
     );
