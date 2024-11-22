@@ -19,8 +19,9 @@ const weatherAxiosInstance = axios.create({
 
 
   apiAxiosInstance.interceptors.request.use(
-    (config) => {
-        const token = AsyncStorage.getItem('token');
+    async (config) => {
+        const token = await AsyncStorage.getItem('token');
+        console.log('this is token ', token);
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
