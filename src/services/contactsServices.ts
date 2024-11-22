@@ -60,28 +60,40 @@ export const readPhoneContacts = async () => {
     const permission = await verifyPermissions(PERMISSIONS.ANDROID.READ_CONTACTS)
     if (permission) {
       const phoneContacts = await Contacts.getAll();
-      const phoneContactsList = phoneContacts.map(contact => {
+      const phoneContactsList: IContact[] = phoneContacts.map(contact => {
         return {
-          name: contact.displayName, 
-          email: contact.emailAddresses[0]?.email, 
-          phoneNumber: contact.phoneNumbers[0]?.number}
-      }) 
+          name: contact.displayName,
+          email: contact.emailAddresses[0]?.email,
+          phoneNumber: contact.phoneNumbers[0]?.number.trim()
+        }
+      })
 
       return phoneContactsList;
     }
   } catch (error) {
-    console.error('Error taking photo:', error);
+    console.error('Error getting phone contacts:', error);
   }
 }
 
 export const savePhoneContacts = async (contactsList: IContact[], user: IUser) => {
   try {
-    const savedContacts = contactsList.map(async (contact) => {
-      return await saveContact(contact, user);
-    })
+    const savedContacts: IContact[] =  await Promise.all(
+      contactsList.map(async (contact) => {
+        try {
+          console.log('this is contact', contact);
+          const savedContact = await saveContact({...contact, location: {latitude: 6.219129692661363, longitude: -75.58361012412955} }, user);
+          console.log('this is saved', savedContact);
+          return savedContact
+          
+        } catch (error) {
+          console.error('error in map', error);
+        }
+      })
+    )
+
 
     return savedContacts;
-    
+
   } catch (error: any) {
     console.error('Error saving phone contacts', error);
   }

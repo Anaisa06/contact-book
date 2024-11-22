@@ -41,8 +41,8 @@ const AllContactsScreen = () => {
                 renderSectionHeader={({ section: { title } }) => (
                   <Text style={{ fontSize: 30, color: '#967AA1', paddingHorizontal: 20 }}>{title}</Text>
                 )}
+                onEndReachedThreshold={1}
                 onEndReached={handleLoadMore}
-                onEndReachedThreshold={0.1}
                 ListFooterComponent={() => isLoading ? <ActivityIndicator size="large" style={{ marginBottom: 20}}/> : null} 
               />
             </>

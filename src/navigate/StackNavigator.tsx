@@ -8,10 +8,13 @@ import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
 import { useState, useEffect } from "react";
 import { View, ActivityIndicator, TouchableOpacity } from "react-native";
-import { getToken } from "../services/auth/authServices";
+import { getToken, getUser } from "../services/auth/authServices";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Logout from "../components/molecules/Logout";
 import { useNavigation } from "@react-navigation/native";
+import Settings from "../components/molecules/Settings";
+import { IUser } from "../interfaces/userInterface";
+import SettingsScreen from "../screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -21,13 +24,16 @@ const StackNavigator = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<IUser | undefined>(undefined);
 
   useEffect(() => {
     const checkToken = async () => {
       try {
         const tokenExists = await getToken();
+        const userLogged = await getUser();
 
         setIsLoggedIn(tokenExists); 
+        setUser(userLogged);
       } catch (error) {
         console.log("Error reading token:", error);
       } finally {
@@ -50,11 +56,15 @@ const StackNavigator = () => {
       <Stack.Screen name='Register' component={RegisterScreen} options={{headerShown: false}} />
       <Stack.Screen name='Login' component={LoginScreen} options={{headerShown: false}} />
       <Stack.Screen name='AllContacts' component={AllContactsScreen} options={{ title: 'Mis contactos', headerRight: () => (
+     <>
+      <Settings user={user} navigation={navigation}/>
       <Logout navigation={navigation}/>
+     </>
     ), }} />
       <Stack.Screen name='SingleContact' component={SingleContactScreen} options={{ title: 'Detalles del contacto' }} />
       <Stack.Screen name='AddContact' component={AddContactScreen} options={{ title: 'Nuevo contacto' }} />
       <Stack.Screen name='UpdateContact' component={UpdateContactScreen} options={{ title: 'Editar contacto' }} />
+      <Stack.Screen name='Settings' component={SettingsScreen} options={{ title: 'Configuración' }} />
 
     </Stack.Navigator>
   )

@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { IContact } from "../interfaces/contactInterface";
 import { LatLng } from "react-native-maps";
+import { IUser } from "../interfaces/userInterface";
 
 export type RootStackParamList = {
     Register: undefined;
@@ -10,6 +11,8 @@ export type RootStackParamList = {
     SingleContact: { contact: IContact };
     UpdateContact: { contact: IContact };
     Map: { location?: LatLng, setLocation: React.Dispatch<React.SetStateAction<LatLng>>};
+    Settings: {user: IUser};
+    
   }
 
 export type AddContactNavigationProp = NativeStackNavigationProp<RootStackParamList, 'AddContact'>;
@@ -23,5 +26,8 @@ export type UpdateContactNavigationProp = NativeStackNavigationProp<RootStackPar
 export type RegisterNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
 
 export type LoginNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
+
+export type SettingsNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Settings'>;
+
 
 
