@@ -64,10 +64,7 @@ const ContactForm = ({ contact, navigator }: Props) => {
                     />
 
                     <Controller name='email' control={control} defaultValue={contact ? contact.email : ''} rules={{
-                        required: {
-                            value: true,
-                            message: 'Campo requerido'
-                        },
+
                         pattern: {
                             value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                             message: 'El email debe tener un formato válido',
@@ -78,14 +75,7 @@ const ContactForm = ({ contact, navigator }: Props) => {
                     />
 
                     <Controller name='phoneNumber' control={control} defaultValue={contact ? contact.phoneNumber : ''} rules={{
-                        required: {
-                            value: true,
-                            message: 'Campo requerido'
-                        },
-                        pattern: {
-                            value: /^[0-9]{10}$/,
-                            message: 'El numero debe tener un formato válido',
-                        },
+
                     }} render={({ field }) => (
                         <Inputfield label='Número de celular' field={field} error={errors.phoneNumber} type={'phone-pad'} />
                     )}

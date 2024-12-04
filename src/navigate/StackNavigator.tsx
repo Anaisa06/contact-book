@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import Settings from "../components/molecules/Settings";
 import { IUser } from "../interfaces/userInterface";
 import SettingsScreen from "../screens/SettingsScreen";
+import OnboardingScreen from "../screens/OnboardingScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -52,12 +53,15 @@ const StackNavigator = () => {
   }
   
   return (
-    <Stack.Navigator initialRouteName={isLoggedIn ? 'AllContacts' : 'Login'}>
+    <Stack.Navigator initialRouteName={
+      isLoggedIn ? 
+      user?.onboarding ?  'AllContacts': 'Onboarding'  
+      : 'Login'
+      }>
       <Stack.Screen name='Register' component={RegisterScreen} options={{headerShown: false}} />
       <Stack.Screen name='Login' component={LoginScreen} options={{headerShown: false}} />
       <Stack.Screen name='AllContacts' component={AllContactsScreen} options={{ title: 'Mis contactos', headerRight: () => (
      <>
-      <Settings user={user} navigation={navigation}/>
       <Logout navigation={navigation}/>
      </>
     ), }} />
@@ -65,6 +69,7 @@ const StackNavigator = () => {
       <Stack.Screen name='AddContact' component={AddContactScreen} options={{ title: 'Nuevo contacto' }} />
       <Stack.Screen name='UpdateContact' component={UpdateContactScreen} options={{ title: 'Editar contacto' }} />
       <Stack.Screen name='Settings' component={SettingsScreen} options={{ title: 'Configuración' }} />
+      <Stack.Screen name='Onboarding' component={OnboardingScreen} options={{headerShown: false}} />
 
     </Stack.Navigator>
   )

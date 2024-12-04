@@ -80,9 +80,7 @@ export const savePhoneContacts = async (contactsList: IContact[], user: IUser) =
     const savedContacts: IContact[] =  await Promise.all(
       contactsList.map(async (contact) => {
         try {
-          console.log('this is contact', contact);
           const savedContact = await saveContact({...contact, location: {latitude: 6.219129692661363, longitude: -75.58361012412955} }, user);
-          console.log('this is saved', savedContact);
           return savedContact
           
         } catch (error) {
@@ -91,7 +89,7 @@ export const savePhoneContacts = async (contactsList: IContact[], user: IUser) =
       })
     )
 
-
+    console.log(savedContacts);
     return savedContacts;
 
   } catch (error: any) {

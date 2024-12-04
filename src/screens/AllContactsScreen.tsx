@@ -26,6 +26,8 @@ const AllContactsScreen = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ height: '100%' }}>
+
+        
         {
           groupedData.length > 0
             ?
@@ -36,7 +38,7 @@ const AllContactsScreen = () => {
               />
               <SectionList
                 sections={groupedData}
-                keyExtractor={(item, index) => item.id + index}
+                keyExtractor={(item, index) => item.id}
                 renderItem={({ item }) => <CardComponent contact={item} handlePress={() => handlePressCard(item)} />}
                 renderSectionHeader={({ section: { title } }) => (
                   <Text style={{ fontSize: 30, color: '#967AA1', paddingHorizontal: 20 }}>{title}</Text>

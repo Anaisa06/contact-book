@@ -11,7 +11,8 @@ export type RootStackParamList = {
     SingleContact: { contact: IContact };
     UpdateContact: { contact: IContact };
     Map: { location?: LatLng, setLocation: React.Dispatch<React.SetStateAction<LatLng>>};
-    Settings: {user: IUser};
+    Settings: undefined;
+    Onboarding: undefined;
     
   }
 
@@ -28,6 +29,8 @@ export type RegisterNavigationProp = NativeStackNavigationProp<RootStackParamLis
 export type LoginNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
 export type SettingsNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Settings'>;
+
+export type OnboardingNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Onboarding'>;
 
 
 

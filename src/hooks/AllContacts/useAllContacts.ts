@@ -51,14 +51,20 @@ const useAllContacts = (watchedText: string, navigation: HomeNavigationProp) => 
       const user: IUser = await getUser();
       setUser(user);
       
-      const { contacts, total, apiTotalPages } = await getContacts(user, 10, page);      
+      const { contacts, total, apiTotalPages } = await getContacts(user, 200, page);      
       
       setContactsList((prevContacts) => [...prevContacts, ...contacts])
       
       setTotalPages(apiTotalPages);
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('error in useAllContacts fetchData', error);
+      if (error.status === 404) {
+        return {
+          groupedData: []
+        }
+      };
+
     } finally {
       setIsLoading(false);
     }
@@ -83,15 +89,11 @@ const useAllContacts = (watchedText: string, navigation: HomeNavigationProp) => 
   }
 
   const handlePressAddBtn = async () => {
-    navigation.navigate('AddContact');
     setContactsList([]);
     setCurrentPage(1);
-    await readPhoneContacts()
-  }
+    navigation.navigate('AddContact');
 
-  // useEffect(() => {
-  //   fetchData(currentPage);
-  // }, [currentPage]);
+  }
 
   const filteredData = useDebouncer(contactsList, watchedText);
 

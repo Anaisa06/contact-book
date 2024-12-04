@@ -7,7 +7,7 @@ import { IUser } from "../../interfaces/userInterface";
 export const LoginService = async (loginData: ILogin) => {
 
         const {data} = await apiAxiosInstance.post('auth/login', loginData);
-        console.log(data.data.token);
+        console.log(data.data.user);
         if(data.statusCode === 201) {
             await setToken(data.data.token);
             await setUser(data.data.user);

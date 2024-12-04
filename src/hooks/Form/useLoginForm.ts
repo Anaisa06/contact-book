@@ -20,11 +20,12 @@ export const useLoginForm = () => {
     const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
         try {
             const response = await LoginService(data);
+            console.log(response);
             if(response.statusCode === 201) {
                 navigation.dispatch(
                     CommonActions.reset({
                       index: 0,
-                      routes: [{ name: 'AllContacts' }],
+                      routes: [{ name: response.data.user.onboarding ? 'AllContacts' : 'Onboarding' }],
                     })
                   );
             }
